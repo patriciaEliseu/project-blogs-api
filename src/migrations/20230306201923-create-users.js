@@ -12,7 +12,6 @@ module.exports = {
       },
       displayName: {
         allowNull: false,
-        unique: true,
         type: Sequelize.STRING,
         field: 'display_name'
       },
@@ -23,7 +22,6 @@ module.exports = {
       },
       password: {
         allowNull: false,
-        unique: true,
         type: Sequelize.STRING
       },
       image: {
