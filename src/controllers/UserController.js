@@ -14,7 +14,8 @@ const loginCreate = async (req, res) => {
     }
 
     const user = await UserService.loginCreate(email, password);
-    if (!user || !UserService.createUserWithBcrypt.compareSync(password, user.password)) {
+    console.log('user', user);
+    if (!user) {
       return res.status(400).json({ message: 'Invalid fields' });
     }
     const { password: _, ...userWithoutPassword } = user.dataValues;
