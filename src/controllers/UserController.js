@@ -1,4 +1,3 @@
-// const { createToken } = require('../auth/authFunctions');
 const jwt = require('jsonwebtoken');
 const { UserService } = require('../services');
 require('dotenv/config');
