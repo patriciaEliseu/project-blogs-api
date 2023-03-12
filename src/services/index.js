@@ -1,8 +1,6 @@
-const { UserService } = require('./UserService');
-const { createUserWithBcrypt } = require('./UserService');
+const UserService = require('./UserService');
 
 module.exports = {
-  createUserWithBcrypt,
-  UserService,
+ UserService,
  
 };

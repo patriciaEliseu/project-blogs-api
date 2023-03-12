@@ -1,32 +1,38 @@
-// const bcrypt = require('bcrypt');
-
-const { createToken } = require('../auth/authFunctions');
+// const { createToken } = require('../auth/authFunctions');
+const jwt = require('jsonwebtoken');
 const { UserService } = require('../services');
 require('dotenv/config');
 
+const secret = process.env.JWT_SECRET || 'secretJWT';
+
 const isBodyValid = (email, password) => email && password;
 
-const loginCreate = async (req, res) => {
+const login = async (req, res) => {
   try {
   const { email, password } = req.body;
     if (!isBodyValid(email, password)) {
     return res.status(400).json({ message: 'Some required fields are missing' });
     }
 
-    const user = await UserService.loginCreate(email, password);
-    console.log('user', user);
-    if (!user) {
+    const user = await UserService.loginPursuit(email);
+
+       if (!user || user.password !== password) {
       return res.status(400).json({ message: 'Invalid fields' });
     }
-    const { password: _, ...userWithoutPassword } = user.dataValues;
+    // const { password: _, ...userWithoutPassword } = user.dataValues; 
+    const JWT_CONFIG = {
+      algorithm: 'HS256',
+      expiresIn: '7d',
+    };
+    
+    const token = jwt.sign({ data: { userId: user.id } }, secret, JWT_CONFIG);
 
-    const token = createToken(userWithoutPassword);
-    return res.status(200).json(token);
-  } catch (error) {
+     res.status(200).json({ token });
+  } catch (error) { 
     return res.status(500).json({ message: 'erro interno' });
   }
 };
 
 module.exports = { 
-  loginCreate,
+  login,
 };
