@@ -28,10 +28,27 @@ const login = async (req, res) => {
 
      res.status(200).json({ token });
   } catch (error) { 
-    return res.status(500).json({ message: 'erro interno' });
+    return res.status(500).json({ message: 'Erro interno' });
   }
+};
+
+const createUser = async (req, res) => {
+    const { displayName, email, password, image } = req.body;
+ 
+    const newUser = await UserService.createUser({ displayName, email, password, image });
+  console.log('newUser', newUser);
+  if (!newUser) return Error;
+  
+    const JWT_CONFIG = {
+    algorithm: 'HS256',
+    expiresIn: '7d',
+    };
+  
+  const token = jwt.sign({ data: { userId: newUser.id } }, secret, JWT_CONFIG);
+   return res.status(201).json({ token });
 };
 
 module.exports = { 
   login,
+  createUser,
 };
