@@ -6,10 +6,10 @@ module.exports = async (req, res, next) => {
     return res.status(400)
     .json({ message: '"email" must be a valid email' });
   }
-  const emailBD = UserService.loginPursuit(email); 
-  const emailExist = await emailBD.dataValues;
-  console.log('emailExist', emailExist);
-  if (emailExist === email) {
+  const emailBD = await UserService.loginPursuit(email); 
+  // const emailExist = emailBD.dataValues;
+  // console.log('emailExist', emailExist);
+  if (emailBD) {
     return res.status(409)
     .json({ message: 'User already registered' });
   }

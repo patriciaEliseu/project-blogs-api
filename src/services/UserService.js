@@ -10,8 +10,8 @@ const { User } = require('../models');
 // buscando usuario 
 const loginPursuit = async (email) => User.findOne({ where: { email } });
 
-const createUser = ({ displayName, email, password, image }) =>
- User.create({ displayName, email, password, image });
+const createUser = async ({ displayName, email, password, image }) =>
+User.create({ displayName, email, password, image });
  
 module.exports = {
   // createUserWithBcrypt,
