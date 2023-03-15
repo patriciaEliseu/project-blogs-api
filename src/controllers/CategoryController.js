@@ -1,6 +1,11 @@
 const { CategoryService } = require('../services');
 require('dotenv/config');
 
+const getAll = async (req, res) => {
+const body = await CategoryService.getAll();
+  return res.status(200).json(body);
+};
+
 const categorieCreate = async (req, res) => {
   const { name } = req.body;
 
@@ -13,4 +18,5 @@ const categorieCreate = async (req, res) => {
 
 module.exports = { 
   categorieCreate,
+  getAll,
 };
