@@ -10,6 +10,10 @@ const { User } = require('../models');
 // buscando usuario 
 const loginPursuit = async (email) => User.findOne({ where: { email } });
 
+const getAll = async () => User.findAll({ attributes: { exclude: ['password'] } });
+
+const getByUserId = async (id) => User.findByPk(id);
+
 const createUser = async ({ displayName, email, password, image }) =>
 User.create({ displayName, email, password, image });
  
@@ -17,4 +21,6 @@ module.exports = {
   // createUserWithBcrypt,
   loginPursuit,
   createUser,
+  getAll,
+  getByUserId,
 };
