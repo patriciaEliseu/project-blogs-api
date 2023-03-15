@@ -42,6 +42,7 @@ const getAll = async (req, res) => {
 const getByUserId = async (req, res) => {
   const { id } = req.params;
   const userId = await UserService.getByUserId(id);
+  console.log('userId');
   if (!userId) {
     return res.status(404).json({ message: 'User does not exist' });
   }
