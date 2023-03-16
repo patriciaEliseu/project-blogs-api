@@ -8,6 +8,15 @@ const BlogP = await BlogPost.findAll({
     return BlogP;
   };
 
+const getById = async (id) => {
+  const postId = await BlogPost.findByPk(id, {
+    include: [
+      { model: User, as: 'user', attributes: { exclude: 'password' } },
+    { model: Category, as: 'categories', attributes: { exclude: 'PostCategory' } }] });
+    return postId;
+  };
+
 module.exports = {
   getAll,
+  getById,
 };

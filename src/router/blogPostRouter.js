@@ -4,6 +4,6 @@ const { BlogPostController } = require('../controllers');
 
 const router = express.Router();
 router.get('/', validateJWT, BlogPostController.getAll);
-// router.post('/', validateJWT, BlogPostController.ieCreate);
+router.get('/:id', validateJWT, BlogPostController.getById);
 
 module.exports = router;
