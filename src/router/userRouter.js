@@ -10,5 +10,6 @@ const router = express.Router();
 router.get('/', validateJWT, UserController.getAll);
 router.get('/:id', validateJWT, UserController.getByUserId);
 router.post('/', validateDisplayName, validateEmail, validatePassword, UserController.createUser);
+router.delete('/me', validateJWT, UserController.deleteUserMe);
 
 module.exports = router;

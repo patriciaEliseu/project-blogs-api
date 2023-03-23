@@ -60,9 +60,20 @@ const createUser = async (req, res) => {
    return res.status(201).json({ token });
 };
 
+const deleteUserMe = async (req, res) => {
+ try {
+  const { userId } = req.user.data;
+  await UserService.deleteUserMe(userId);
+    return res.status(204).json();
+ } catch (e) {
+    res.status(500).json({ message: e.message });
+ }
+};
+
 module.exports = { 
   login,
   createUser,
   getAll,
   getByUserId,
+  deleteUserMe,
 };

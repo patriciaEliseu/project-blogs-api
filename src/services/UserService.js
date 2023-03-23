@@ -16,6 +16,13 @@ const getByUserId = async (id) => User.findByPk(id, { attributes: { exclude: ['p
 
 const createUser = async ({ displayName, email, password, image }) =>
 User.create({ displayName, email, password, image });
+
+const deleteUserMe = async (id) => {
+  const verifUser = await User.findByPk(id);
+    if (verifUser) {
+    await User.destroy({ where: { id } });
+}
+};
  
 module.exports = {
   // createUserWithBcrypt,
@@ -23,4 +30,5 @@ module.exports = {
   createUser,
   getAll,
   getByUserId,
+  deleteUserMe,
 };
