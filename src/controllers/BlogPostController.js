@@ -23,9 +23,8 @@ const { userId } = req.user.data;
 
 const verifId = (await CategoryService.getAll())
 .map((elemento) => elemento.id);
-console.log('verifId', verifId);
+
 const veriEvery = categoryIds.every((e) => verifId.includes(e));
-console.log('v', veriEvery);
 if (veriEvery === false) {
   return res.status(400).json({ message: 'one or more "categoryIds" not found' });
 }
@@ -56,19 +55,18 @@ const updatePost = async (req, res) => {
 };
 
 const delBlogPost = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const { userId } = req.user.data;
 
-  const user = await UserService.getByUserId(id);
-  console.log('userCont', user);
-  if (userId !== user) {
-    return res.status(401).json({ message: 'Unauthorized user' });
-  }
- const del = await BlogPostService.delBlogPost(id);
- console.log('delCont', del);
-  if (!del) {
+  const post = await BlogPostService.getById(id);
+  if (!post) {
     return res.status(404).json({ message: 'Post does not exist' });
   }
+   if (post.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+ await BlogPostService.delBlogPost(id);
+ 
     return res.status(204).json();
 };
 

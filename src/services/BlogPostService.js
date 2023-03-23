@@ -18,10 +18,8 @@ const getById = async (id) => {
   };
 
 const createPost = async ({ title, content, categoryIds, userId }) => {
-  // console.log('serv', title, content, categoryIds, userId);
   const result = await sequelize.transaction(async (t) => {
-    const create = await BlogPost.create({ title, content, userId }, { transaction: t });
-    // console.log('createServ', create, result);
+  const create = await BlogPost.create({ title, content, userId }, { transaction: t });
     await Promise.all(categoryIds.map((id) => PostCategory
     .create({ categoryId: id, postId: create.dataValues.id }, { transaction: t })));
      
@@ -41,7 +39,7 @@ const updatePost = async ({ id, title, content }) => {
 };
 
 const delBlogPost = async (id) => {
-  console.log('idServ', id);
+  // console.log('idServ', id);
   await BlogPost.findByPk(id);
  const del = await BlogPost.destroy({
    where: { id },
